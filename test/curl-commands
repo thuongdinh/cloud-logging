@@ -1,0 +1,2 @@
+Log a message
+curl -X POST http://localhost:3000/api/log/cloud_logging_sandbox/log -H "Content-Type: application/json" -d '{"level":"info", "message": "This is log message"}'
