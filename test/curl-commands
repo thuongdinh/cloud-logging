@@ -1,2 +1,6 @@
 Log a message
 curl -X POST http://localhost:3000/api/log/cloud_logging_sandbox/log -H "Content-Type: application/json" -d '{"level":"info", "message": "This is log message"}'
+
+Authentication
+curl -X POST http://localhost:3000/login -H "Content-Type: application/json" -d '{"username":"tj", "password": "foobar"}' -c cookies.txt
+curl -X GET http://localhost:3000/restricted -b cookies.txt

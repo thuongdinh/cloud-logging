@@ -1,4 +1,4 @@
-var LogPersistent = require('../core/log/logPersistent').LogPersistent;
+var LogPersistent = require('../core/log/log-persistent').LogPersistent;
 
 var LogRouter = function (app) {
     var LOG_ROUTER = '/api/log/:userId/:app',
