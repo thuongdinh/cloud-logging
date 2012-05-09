@@ -5,7 +5,8 @@
 var express = require('express'),
     routes = require('./routes'),
     logRouter = require('./routes/log').LogRouter,
-    authRouter = require('./routes/auth').AuthRouter;
+    authRouter = require('./routes/auth').AuthRouter,
+    SimpleAuthService = require('./core/auth/simple-auth').Auth;
 
 var app = module.exports = express.createServer();
 
@@ -22,6 +23,9 @@ app.configure(function(){
     }));
     app.use(app.router);
     app.use(express.static(__dirname + '/public'));
+
+    // config service
+    app.authService = new SimpleAuthService(app);
 });
 
 app.configure('development', function(){

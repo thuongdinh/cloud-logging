@@ -20,4 +20,15 @@ The client API for Node.js
 ### CLI
 Base on clinet for Node.js, cli help developers retrive log data as quick as they can.
 
+## Release Note
+
+### v0.1 (todo)
+1. Core:
+- log, get all log, get by date, clean
+- authentication, retrived user's database using mongo
+2. Client for javascript
+3. Client for Node.js
+
+// TODO
+
 #### Author: [Thuong Dinh](https://github.com/zneo99)

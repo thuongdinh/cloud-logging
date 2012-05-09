@@ -6,15 +6,12 @@ var winston = require('winston');
 //
 require('../../lib/winston-mongohq').MongoHQ;
 
+/**
+ * @constructor
+ * @param app
+ */
 var LogPersistent = function (app) {
-//    var dataURL = app.dataURL;
-//
-//    // add a transport for winston
-//    winston.add(winston.transports.MongoHQ, {
-//        mongohqURL: dataURL
-//    });
     this.loggers = {};
-    console.log(winston);
 };
 
 var p = LogPersistent.prototype;
@@ -40,6 +37,12 @@ p.log = function (opt) {
     this.getLogger(userId, app).log(level, message);
 };
 
+/**
+ * Logger factory
+ *
+ * @param userId
+ * @param app
+ */
 p.getLogger = function (userId, app) {
     var loggerUID = userId + '-' + app,
         logger = this.loggers[loggerUID];
@@ -48,7 +51,7 @@ p.getLogger = function (userId, app) {
         logger = new (winston.Logger)({
             transports: [
                 new winston.transports.MongoHQ({
-                    mongohqURL: 'mongodb://cloud_logging_user:test123@staff.mongohq.com:10032/' + userId,
+                    mongohqURL: 'mongodb://root:123456@flame.mongohq.com:27068/log_' + userId,
                     collection: app
                 })
             ]
@@ -61,4 +64,6 @@ p.getLogger = function (userId, app) {
     return logger;
 };
 
+// Export
+//-------
 exports.LogPersistent = LogPersistent;
