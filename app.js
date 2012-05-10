@@ -37,7 +37,7 @@ app.configure('production', function(){
 });
 
 // Database info
-app.dataURL = process.env.MONGOHQ_URL || 'mongodb://root:123456@flame.mongohq.com:27068/';
+app.dataURL = process.env.MONGOHQ_URL || 'mongodb://root:123456@flame.mongohq.com:27068';
 
 // Routes
 
@@ -49,5 +49,4 @@ authRouter(app);
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log("Listening on " + port);
-    console.log(process.env);
 });
