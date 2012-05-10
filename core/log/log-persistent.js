@@ -47,6 +47,8 @@ p.getLogger = function (userId, app) {
     var loggerUID = userId + '-' + app,
         logger = this.loggers[loggerUID];
 
+    console.log(app.dataURL + '/log_' + userId);
+
     if (!logger) {
         logger = new (winston.Logger)({
             transports: [
