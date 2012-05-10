@@ -59,8 +59,6 @@ p.getLogger = function (userId, app) {
         this.loggers[loggerUID] = logger;
     }
 
-    console.log(logger);
-
     return logger;
 };
 
