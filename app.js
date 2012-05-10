@@ -38,6 +38,7 @@ app.configure('production', function(){
 
 // Database info
 app.dataURL = process.env.MONGOHQ_URL || 'mongodb://root:123456@flame.mongohq.com:27068';
+console.log(app.dataURL);
 
 // Routes
 
