@@ -29,15 +29,15 @@ app.configure(function(){
 });
 
 app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 app.configure('production', function(){
-  app.use(express.errorHandler());
+    app.use(express.errorHandler());
 });
 
 // Database info
-app.dataURL = 'mongodb://cloud_logging_user:test123@staff.mongohq.com:10032/cloud_logging_sandbox';
+app.dataURL = process.env.MONGOHQ_URL || 'mongodb://root:123456@flame.mongohq.com:27068/';
 
 // Routes
 

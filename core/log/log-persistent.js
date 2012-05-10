@@ -51,7 +51,7 @@ p.getLogger = function (userId, app) {
         logger = new (winston.Logger)({
             transports: [
                 new winston.transports.MongoHQ({
-                    mongohqURL: 'mongodb://root:123456@flame.mongohq.com:27068/log_' + userId,
+                    mongohqURL: app.dataURL + 'log_' + userId,
                     collection: app
                 })
             ]
