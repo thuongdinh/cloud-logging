@@ -12,6 +12,7 @@ require('../../lib/winston-mongohq').MongoHQ;
  */
 var LogPersistent = function (app) {
     this.loggers = {};
+    this.app = app;
 };
 
 var p = LogPersistent.prototype;
@@ -47,13 +48,11 @@ p.getLogger = function (userId, app) {
     var loggerUID = userId + '-' + app,
         logger = this.loggers[loggerUID];
 
-    console.log(app.dataURL + '/log_' + userId);
-
     if (!logger) {
         logger = new (winston.Logger)({
             transports: [
                 new winston.transports.MongoHQ({
-                    mongohqURL: app.dataURL + '/log_' + userId,
+                    mongohqURL: this.app.dataURL + '/log_' + userId,
                     collection: app
                 })
             ]
