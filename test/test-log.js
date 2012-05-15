@@ -4,14 +4,15 @@ var vows = require('vows'),
     mongodb = require('mongodb');
 
 mongodb.Db.connect('mongodb://root:123456@flame.mongohq.com:27089/log_test', function (e, db) {
+    db.open = function (callback) {
+        callback(null, db);
+    };
 
     // override open method
-    db.collection('log', function (err, col) {
-               col.find().toArray(function (err, docs) {
-                   console.dir(docs);
-                   db.close();
-               });
-           });
+    fixtures.load();
+    fixtures.save(db, function () {
+        db.close();
+    });
 });
 
 
