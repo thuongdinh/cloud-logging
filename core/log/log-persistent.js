@@ -35,7 +35,33 @@ p.log = function (opt) {
         userId = opt.userId,
         app = opt.app;
 
-    this.getLogger(userId, app).log(level, message);
+    this._getLogger(userId, app).log(level, message);
+};
+
+/**
+ *
+ * @param opt
+ *  {
+ *
+ *      userId
+ *      app
+ *  }
+ */
+p.queryLogs = function (opt, callback) {
+    opt = opt || {};
+
+    var userId = opt.userId,
+        app = opt.app;
+
+    this._getLoggerDb(userId, app, function (db) {
+        if (db) {
+            db.collection(app, function (err, col){
+                col.find().toArray(function(err, docs) {
+                    callback(docs);
+                });
+            });
+        }
+    });
 };
 
 /**
@@ -44,7 +70,7 @@ p.log = function (opt) {
  * @param userId
  * @param app
  */
-p.getLogger = function (userId, app) {
+p._getLogger = function (userId, app) {
     var loggerUID = userId + '-' + app,
         logger = this.loggers[loggerUID];
 
@@ -61,6 +87,19 @@ p.getLogger = function (userId, app) {
     }
 
     return logger;
+};
+
+/**
+ * Get db of log
+ * @param userId
+ * @param app
+ * @param callback
+ */
+p._getLoggerDb = function (userId, app, callback) {
+    var logger = this._getLogger(userId, app);
+    logger.transports["mongohq"].open(function () {
+        callback(logger.transports["mongohq"]._db);
+    });
 };
 
 // Export

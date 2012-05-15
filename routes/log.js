@@ -8,8 +8,18 @@ var LogRouter = function (app) {
     // config routers
     // Get api
     app.get(LOG_ROUTER, function(req, res){
-        res.send({
-            message:'Get: TODO'
+        var data = req.body,
+            userId = req.params.userId,
+            app = req.params.app,
+            level = data.level,
+            message = data.message;
+
+        // log
+        logPersistent.queryLogs({
+            userId: userId,
+            app: app
+        }, function (resp) {
+            res.send(resp);
         });
     });
 
