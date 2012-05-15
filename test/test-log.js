@@ -1,34 +1,12 @@
 var vows = require('vows'),
     assert = require('assert'),
-    fixtures = require('mongodb-fixtures'),
-    mongodb = require('mongodb');
+    Fixtures = require('./helper/fixtures-helper');
 
-mongodb.Db.connect('mongodb://root:123456@flame.mongohq.com:27089/log_test', function (e, db) {
-    db.open = function (callback) {
-        callback(null, db);
-    };
-
-    // override open method
-    fixtures.load();
-    fixtures.save(db, function () {
-        db.close();
-    });
-});
-
-
-//
-//fixtures.load();
-//fixtures.save(db, function () {
-//   //db.close();
-//   console.log(db);
-//   db.collection('log', function (err, col) {
-//       col.find().toArray(function (err, docs) {
-//           console.dir(docs);
-//           db.close();
-//       });
-//   });
-//   //console.log(fixtures);
+fixturesHelper = new Fixtures('mongodb://root:123456@flame.mongohq.com:27089/log_test');
+//fixturesHelper.loadFixtures(function() {
+//    console.log('success');
 //});
+fixturesHelper.clean('log');
 
 //vows.describe('Test vows').addBatch({
 //   'when start': {
