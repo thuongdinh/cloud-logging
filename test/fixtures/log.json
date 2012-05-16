@@ -1,5 +1,48 @@
-{
-    "data": {
-        "ts": 1
+[
+
+    {
+        "timestamp": "2012-05-16 10:00:11 UTC",
+        "level": "info",
+        "message": "Test log1",
+        "meta": null,
+        "_id": "4fb37aab16cc4b872f000001"
+    },
+    {
+        "timestamp": "2012-05-16 10:00:11 UTC",
+        "level": "info",
+        "message": "Test log2",
+        "meta": null,
+        "_id": "4fb37aab16cc4b872f000001"
+    },
+    {
+        "timestamp": "2012-05-16 10:00:11 UTC",
+        "level": "info",
+        "message": "Test log3",
+        "meta": null,
+        "_id": "4fb37aab16cc4b872f000001"
+    },
+
+
+    {
+        "timestamp": "2012-05-17 10:00:11 UTC",
+        "level": "info",
+        "message": "Test log1",
+        "meta": null,
+        "_id": "4fb37aab16cc4b872f000001"
+    },
+    {
+        "timestamp": "2012-05-17 10:00:11 UTC",
+        "level": "info",
+        "message": "Test log2",
+        "meta": null,
+        "_id": "4fb37aab16cc4b872f000001"
+    },
+    {
+        "timestamp": "2012-05-17 10:00:11 UTC",
+        "level": "info",
+        "message": "Test log3",
+        "meta": null,
+        "_id": "4fb37aab16cc4b872f000001"
     }
-}
+
+]

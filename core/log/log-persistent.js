@@ -27,7 +27,7 @@ var p = LogPersistent.prototype;
  *      app
  *  }
  */
-p.log = function (opt) {
+p.log = function (opt, callback) {
     opt = opt || {};
 
     var level = opt.level || 'info',
@@ -36,6 +36,10 @@ p.log = function (opt) {
         app = opt.app;
 
     this._getLogger(userId, app).log(level, message);
+
+    // this part only for testing
+    if (callback)
+        setTimeout(callback, 100);
 };
 
 /**

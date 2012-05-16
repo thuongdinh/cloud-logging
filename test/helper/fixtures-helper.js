@@ -44,3 +44,26 @@ p.loadFixtures = function (callback) {
         });
     });
 };
+
+/**
+ * Get all data to collection for testing purpose
+ * @param collectionName
+ * @param callback
+ */
+p.loadCollection = function (collectionName, callback) {
+
+    mongodb.Db.connect(this.url, function (e, db) {
+        if (e)
+            callback(e, db);
+        db.collection(collectionName, function (e, col) {
+            if (e)
+                callback(e, db);
+
+            col.find({}).toArray(function (e, col) {
+                callback(e, col);
+                db.close();
+            });
+
+        });
+    });
+};
