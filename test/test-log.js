@@ -18,6 +18,7 @@ function cleanLogBeforeTest () {
     fixturesHelper.clean('log', this.callback);
 }
 function loadFixtures () {
+    console.log('');
     fixturesHelper.loadFixtures(this.callback);
 }
 
@@ -54,7 +55,10 @@ vows.describe('Simple add/get logs').addBatch({
 
         'query all logs': {
             topic: function () {
-                logPersistent.queryLogs(null, this.callback);
+                logPersistent.queryLogs({
+                    app: 'log',
+                    userId: 'test'
+                }, this.callback);
             },
 
             'check log result': function (e, logs) {
@@ -65,33 +69,53 @@ vows.describe('Simple add/get logs').addBatch({
 
         'query all with limit': {
             topic: function () {
-
+                logPersistent.queryLogs({
+                    app: 'log',
+                    userId: 'test',
+                    limit: 2,
+                    start: 0
+                }, this.callback);
             },
 
-            'check log result': function (e, docs) {
-
+            'check log result': function (e, logs) {
+                assert.isNull(e);
+                assert.equal(_.size(logs), 2);
             }
         },
 
         'query by date': {
             topic: function () {
-
+                logPersistent.queryLogs({
+                    app: 'log',
+                    userId: 'test',
+                    startTime: "2012-05-16 10:00:11 UTC",
+                    endTime: "2012-05-16 12:00:11 UTC"
+                }, this.callback);
             },
 
-            'check log result': function (e, docs) {
-
+            'check log result': function (e, logs) {
+                assert.isNull(e);
+                assert.equal(_.size(logs), 3);
             }
         },
 
         'query by date with limit': {
             topic: function () {
-
+                logPersistent.queryLogs({
+                    app: 'log',
+                    userId: 'test',
+                    startTime: "2012-05-16 10:00:11 UTC",
+                    endTime: "2012-05-16 12:00:11 UTC",
+                    limit: 2,
+                    start: 0
+                }, this.callback);
             },
 
-            'check log result': function (e, docs) {
-
+            'check log result': function (e, logs) {
+                assert.isNull(e);
+                assert.equal(_.size(logs), 2);
             }
-        },
+        }
 
     }
 }).export(module);

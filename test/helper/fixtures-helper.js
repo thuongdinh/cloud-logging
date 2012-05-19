@@ -36,7 +36,7 @@ p.loadFixtures = function (callback) {
         };
 
         // override open method
-        fixtures.load();
+        fixtures.load(__dirname + '/../fixtures');
         fixtures.save(db, function () {
             db.close();
             if (callback)

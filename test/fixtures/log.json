@@ -8,41 +8,41 @@
         "_id": "4fb37aab16cc4b872f000001"
     },
     {
-        "timestamp": "2012-05-16 10:00:11 UTC",
+        "timestamp": "2012-05-16 11:00:11 UTC",
         "level": "info",
         "message": "Test log2",
         "meta": null,
-        "_id": "4fb37aab16cc4b872f000001"
+        "_id": "4fb37aab16cc4b872f000002"
     },
     {
-        "timestamp": "2012-05-16 10:00:11 UTC",
+        "timestamp": "2012-05-16 12:00:11 UTC",
         "level": "info",
         "message": "Test log3",
         "meta": null,
-        "_id": "4fb37aab16cc4b872f000001"
+        "_id": "4fb37aab16cc4b872f000003"
     },
 
 
     {
         "timestamp": "2012-05-17 10:00:11 UTC",
         "level": "info",
-        "message": "Test log1",
+        "message": "Test log4",
         "meta": null,
-        "_id": "4fb37aab16cc4b872f000001"
+        "_id": "4fb37aab16cc4b872f000004"
     },
     {
-        "timestamp": "2012-05-17 10:00:11 UTC",
+        "timestamp": "2012-05-17 11:00:11 UTC",
         "level": "info",
-        "message": "Test log2",
+        "message": "Test log5",
         "meta": null,
-        "_id": "4fb37aab16cc4b872f000001"
+        "_id": "4fb37aab16cc4b872f000005"
     },
     {
-        "timestamp": "2012-05-17 10:00:11 UTC",
+        "timestamp": "2012-05-17 12:00:11 UTC",
         "level": "info",
-        "message": "Test log3",
+        "message": "Test log6",
         "meta": null,
-        "_id": "4fb37aab16cc4b872f000001"
+        "_id": "4fb37aab16cc4b872f000006"
     }
 
 ]

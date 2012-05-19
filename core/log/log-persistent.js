@@ -55,17 +55,40 @@ p.queryLogs = function (opt, callback) {
     opt = opt || {};
 
     var userId = opt.userId,
-        app = opt.app;
+        app = opt.app,
+        queryOpts = this._buildQueryInRange(opt);
 
     this._getLoggerDb(userId, app, function (db) {
         if (db) {
             db.collection(app, function (err, col){
-                col.find().toArray(function(err, docs) {
-                    callback(docs);
-                });
+                col
+                    .find(queryOpts)
+                    .limit(opt.limit || 1000)
+                    .skip(opt.start || 0)
+                    .toArray(function(err, docs) {
+                        callback(err, docs);
+                    });
             });
         }
     });
+};
+
+p._buildQueryInRange = function (opt) {
+    if (!opt)
+        return {};
+
+    var queryOpt = null;
+
+    if (opt.startTime && opt.endTime) {
+        queryOpt = {
+            "timestamp": {
+                $gte: opt.startTime,
+                $lte: opt.endTime
+            }
+        }
+    }
+
+    return queryOpt;
 };
 
 /**
