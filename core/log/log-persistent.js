@@ -1,4 +1,6 @@
-var winston = require('winston');
+var winston = require('winston'),
+    check = require('validator').check,
+    ERROR = require('../const/code').ERROR;
 
 //
 // Requiring `winston-mongohq` will expose
@@ -39,7 +41,7 @@ p.log = function (opt, callback) {
 
     // this part only for testing
     if (callback)
-        setTimeout(callback, 100);
+        setTimeout(callback, 200);
 };
 
 /**
@@ -58,33 +60,51 @@ p.queryLogs = function (opt, callback) {
         app = opt.app,
         queryOpts = this._buildQueryInRange(opt);
 
-    this._getLoggerDb(userId, app, function (db) {
-        if (db) {
-            db.collection(app, function (err, col){
-                col
-                    .find(queryOpts)
-                    .limit(opt.limit || 1000)
-                    .skip(opt.start || 0)
-                    .toArray(function(err, docs) {
-                        callback(err, docs);
-                    });
-            });
-        }
-    });
+    // there are some thing wrong in date format
+    // should return empty dat
+    if (queryOpts && queryOpts.code) {
+        callback(queryOpts);
+    } else {
+        this._getLoggerDb(userId, app, function (db) {
+            if (db) {
+                db.collection(app, function (err, col){
+                    col
+                        .find(queryOpts)
+                        .sort({timestamp: 1})
+                        .limit(opt.limit || 1000)
+                        .skip(opt.start || 0)
+                        .toArray(function(err, docs) {
+                            callback(err, docs);
+                        });
+                });
+            }
+        });
+    }
+
+
 };
 
 p._buildQueryInRange = function (opt) {
     if (!opt)
-        return {};
+        return null;
 
     var queryOpt = null;
 
     if (opt.startTime && opt.endTime) {
-        queryOpt = {
-            "timestamp": {
-                $gte: opt.startTime,
-                $lte: opt.endTime
+        // validate start and end time
+        try {
+            check(opt.startTime).isDate() && // is a date
+            check(opt.endTime).isDate() && // is a date
+            check(opt.startTime).isBefore(opt.endTime); // start date should before end date
+
+            queryOpt = {
+                "timestamp": {
+                    $gte: opt.startTime,
+                    $lte: opt.endTime
+                }
             }
+        } catch (e) {
+            return ERROR.WRONG_DATE_FORMAT; // make sure result empty
         }
     }
 

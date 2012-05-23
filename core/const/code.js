@@ -9,6 +9,11 @@ module.exports.ERROR = {
     BAD_CREDENTICALS : {
         code: 2,
         message: 'BadCredenticals'
+    },
+
+    WRONG_DATE_FORMAT: {
+        code: 3,
+        message: 'WrongDateFormat'
     }
 };
 

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+ERROR_MESSAGE_REX="Broken"
+ftotal=0
+
+echo "Start run unit test cases in $1 times"
+for (( c = 1; c <= $1; c++ ))
+do
+   echo "-----Run at $c time(s)-----"
+
+    VALIDATE_RESULTS=`./node_modules/vows/bin/vows test/*.js --spec`
+
+    case $VALIDATE_RESULTS in
+        *$ERROR_MESSAGE_REX* ) ftotal+=1;;
+    esac
+
+    echo "$VALIDATE_RESULTS"
+done
+
+echo "Fail $ftotal/$1 test cases"
