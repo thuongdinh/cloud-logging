@@ -80,8 +80,6 @@ p.queryLogs = function (opt, callback) {
             }
         });
     }
-
-
 };
 
 p._buildQueryInRange = function (opt) {

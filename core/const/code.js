@@ -14,6 +14,21 @@ module.exports.ERROR = {
     WRONG_DATE_FORMAT: {
         code: 3,
         message: 'WrongDateFormat'
+    },
+
+    WRONG_USER_DATA: {
+        code: 4,
+        message: 'WrongUserData'
+    },
+
+    USER_EXISTED: {
+        code: 5,
+        message: 'UserExixted'
+    },
+
+    USER_ISNOT_EXISTED: {
+        code: 6,
+        message: 'UserIsNotExixted'
     }
 };
 
