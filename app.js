@@ -6,7 +6,7 @@ var express = require('express'),
     routes = require('./routes'),
     logRouter = require('./routes/log').LogRouter,
     authRouter = require('./routes/auth').AuthRouter,
-    SimpleAuthService = require('./core/auth/simple-auth').Auth;
+    AuthService = require('./core/auth/db-auth').Auth;
 
 var app = module.exports = express.createServer();
 
@@ -24,8 +24,20 @@ app.configure(function(){
     app.use(app.router);
     app.use(express.static(__dirname + '/public'));
 
-    // config service
-    app.authService = new SimpleAuthService(app);
+    // config services
+    // ---------------
+
+    // Authentication service
+    app.authInfo = {
+        dataURL: 'mongodb://root:123456@flame.mongohq.com:27090/admin_user',
+        userCollection: 'user', // user collection
+        appCollection: 'app' // user's app information
+    };
+    app.authService = new AuthService(app);
+
+    // log infor
+    // Database info
+    app.dataURL = /*process.env.MONGOHQ_URL || */'mongodb://root:123456@flame.mongohq.com:27068';
 });
 
 app.configure('development', function(){
@@ -35,9 +47,6 @@ app.configure('development', function(){
 app.configure('production', function(){
     app.use(express.errorHandler());
 });
-
-// Database info
-app.dataURL = /*process.env.MONGOHQ_URL || */'mongodb://root:123456@flame.mongohq.com:27068';
 
 // Routes
 app.get('/', routes.index);

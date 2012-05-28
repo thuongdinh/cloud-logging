@@ -170,7 +170,6 @@ vows.describe('Simple add/get logs').addBatch({
             },
 
             'check log result': function (e, logs) {
-                console.dir(logs);
                 assert.isNull(e);
                 assert.equal(_.size(logs), 2);
                 assert.equal(logs[0].message, 'Test log3');

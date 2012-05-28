@@ -8,7 +8,7 @@ var ERROR = require('../const/code').ERROR,
 // Generate a salt for the user to prevent rainbow table attacks
 // for better security take a look at the bcrypt c++ addon:
 // https://github.com/ncb000gt/node.bcrypt.js
-var SHA1_PRIVATE_KEY = 'secret-key';
+var SHA1_PRIVATE_KEY = '048abcf0-a865-11e1-afa6-0800200c9a66';
 
 /**
  * @constructor

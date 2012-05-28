@@ -3,4 +3,6 @@
 #
 test:
 	./node_modules/vows/bin/vows test/*.js --spec
-.PHONY: test install
+run:
+	node app.js
+.PHONY: run install
