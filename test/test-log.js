@@ -158,6 +158,45 @@ vows.describe('Simple add/get logs').addBatch({
                 assert.isNotNull(e);
                 assert.equal(e.code, ERROR.WRONG_DATE_FORMAT.code);
             }
+        },
+
+        'logs with level': {
+            topic: function () {
+                logPersistent.queryLogs({
+                    app: 'log',
+                    userId: 'test',
+                    level: 'error'
+                }, this.callback);
+            },
+
+            'check log result': function (e, logs) {
+                console.dir(logs);
+                assert.isNull(e);
+                assert.equal(_.size(logs), 2);
+                assert.equal(logs[0].message, 'Test log3');
+                assert.equal(logs[0].level, 'error');
+                assert.equal(logs[1].message, 'Test log5');
+                assert.equal(logs[1].level, 'error');
+            }
+        },
+
+        'logs with level && time': {
+            topic: function () {
+                logPersistent.queryLogs({
+                    app: 'log',
+                    userId: 'test',
+                    startTime: "2012-05-16 10:00:11 UTC",
+                    endTime: "2012-05-16 12:00:11 UTC",
+                    level: 'error'
+                }, this.callback);
+            },
+
+            'check log result': function (e, logs) {
+                assert.isNull(e);
+                assert.equal(_.size(logs), 1);
+                assert.equal(logs[0].message, 'Test log3');
+                assert.equal(logs[0].level, 'error');
+            }
         }
 
     }

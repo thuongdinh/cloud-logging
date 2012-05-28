@@ -16,7 +16,7 @@
     },
     {
         "timestamp": "2012-05-16 12:00:11 UTC",
-        "level": "info",
+        "level": "error",
         "message": "Test log3",
         "meta": null,
         "_id": "4fb37aab16cc4b872f000003"
@@ -32,7 +32,7 @@
     },
     {
         "timestamp": "2012-05-17 11:00:11 UTC",
-        "level": "info",
+        "level": "error",
         "message": "Test log5",
         "meta": null,
         "_id": "4fb37aab16cc4b872f000005"

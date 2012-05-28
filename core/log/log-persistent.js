@@ -58,7 +58,7 @@ p.queryLogs = function (opt, callback) {
 
     var userId = opt.userId,
         app = opt.app,
-        queryOpts = this._buildQueryInRange(opt);
+        queryOpts = this._buildQuery(opt);
 
     // there are some thing wrong in date format
     // should return empty dat
@@ -82,11 +82,36 @@ p.queryLogs = function (opt, callback) {
     }
 };
 
-p._buildQueryInRange = function (opt) {
+// Querys helper
+// -------------------------------
+p._buildQuery = function (opt) {
+    var queryOpts = this._buildQueryInRange(opt); // build range query
+
+    // build fillter by level
+    queryOpts = this._buildQueryLevel(opt, queryOpts);
+
+    return queryOpts;
+};
+
+p._buildQueryLevel = function (opt, queryOpt) {
+    if (!opt)
+        return queryOpt;
+
+    var queryOpt = queryOpt || null;
+
+    if (opt.level && (opt.level === 'info' || opt.level === 'error' || opt.level === 'warning')) {
+        queryOpt = queryOpt || {};
+        queryOpt.level = opt.level;
+    }
+
+    return queryOpt;
+}
+
+p._buildQueryInRange = function (opt, queryOpt) {
     if (!opt)
         return null;
 
-    var queryOpt = null;
+    var queryOpt = queryOpt || null;
 
     if (opt.startTime && opt.endTime) {
         // validate start and end time
