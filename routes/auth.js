@@ -42,6 +42,8 @@ var AuthRouter = function (app) {
     });
 
     app.post('/login', function(req, res){
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
         authService.authenticate({
             email: req.body.email,
             password: req.body.password
