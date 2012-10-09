@@ -8,8 +8,13 @@ var vows = require('vows'),
 
 var fixturesHelper = new Fixtures('mongodb://root:123456@flame.mongohq.com:27090/admin_user');
 
+// config log
+var log4js = require('log4js'),
+    logger = log4js.getLogger();
+
 // make auth persistent instance
 var authService = new Auth({
+    logger: logger,
     authInfo: {
         dataURL: 'mongodb://root:123456@flame.mongohq.com:27090/admin_user',
         userCollection: 'user_test', // user information

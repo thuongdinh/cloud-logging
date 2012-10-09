@@ -15,6 +15,7 @@ require('../../lib/winston-mongohq').MongoHQ;
 var LogPersistent = function (app) {
     this.loggers = {};
     this.app = app;
+    this.logger = app.logger;
 };
 
 var p = LogPersistent.prototype;
@@ -37,6 +38,7 @@ p.log = function (opt, callback) {
         userId = opt.userId,
         app = opt.app;
 
+    this.logger.debug("Log message, level: ", level, ", message:", message);
     this._getLogger(userId, app).log(level, message);
 
     // this part only for testing
@@ -59,6 +61,8 @@ p.queryLogs = function (opt, callback) {
     var userId = opt.userId,
         app = opt.app,
         queryOpts = this._buildQuery(opt);
+
+    this.logger.debug("Query message, data: " + JSON.stringify(opt));
 
     // there are some thing wrong in date format
     // should return empty dat

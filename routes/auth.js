@@ -3,6 +3,7 @@ var responseHelper = require('../core/helper/response');
 var AuthRouter = function (app) {
     // Session-persisted message middleware
     var authService = app.authService,
+        logger = app.logger,
         AUTH_ROUTER = '/api/auth';
 
     if (!authService)
@@ -16,16 +17,16 @@ var AuthRouter = function (app) {
      * Create a user
      */
     app.post(AUTH_ROUTER, function(req, res){
-        console.log('Create User with email: ', req.body.email, ', password: ', req.body.password);
+        logger.debug('Create User with email: ', req.body.email, ', password: ', req.body.password);
         authService.createUser({
             email: req.body.email,
             password: req.body.password,
             metadata: req.body.metadata
         }, function (resp) {
             if (resp.data.code === 0) {
-                console.log('Create user success with id: ', resp.data.userId);
+                logger.debug('Create user success with id: ', resp.data.userId);
             } else {
-                console.log('Create user fail with error: ', resp.data.code, ', message: ', resp.data.message);
+                logger.error('Create user fail with error: ', resp.data.code, ', message: ', resp.data.message);
             }
 
             // response result
@@ -34,6 +35,7 @@ var AuthRouter = function (app) {
     });
 
     app.post('/logout', function(req, res){
+        logger.info('User logout ', JSON.stringify(req.session.user || {}));
         // destroy the user's session to log them out
         // will be re-created next request
         req.session.destroy(function(){
@@ -42,6 +44,9 @@ var AuthRouter = function (app) {
     });
 
     app.post('/login', function(req, res){
+
+        logger.info('User login ', req.body.email);
+
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "X-Requested-With");
         authService.authenticate({

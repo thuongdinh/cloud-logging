@@ -2,7 +2,7 @@
 # Run all tests
 #
 test:
-	./node_modules/vows/bin/vows test/*.js --spec
+	./node_modules/vows/bin/vows specs/*.js --spec
 
 run:
 	node app.js

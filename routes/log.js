@@ -3,6 +3,7 @@ var LogPersistent = require('../core/log/log-persistent').LogPersistent;
 var LogRouter = function (app) {
     var LOG_ROUTER = '/api/log/:userId/:app',
         logPersistent = new LogPersistent(app),
+        logger = app.logger,
         authSevice = app.authService;
 
     // config routers
@@ -13,6 +14,13 @@ var LogRouter = function (app) {
             app = req.params.app,
             level = data.level,
             message = data.message;
+
+        logger.info("Retrive log ", JSON.stringify({
+            userId: userId,
+            app: app,
+            level: level,
+            message: message
+        }));
 
         // log
         logPersistent.queryLogs({
@@ -30,6 +38,13 @@ var LogRouter = function (app) {
             app = req.params.app,
             level = data.level,
             message = data.message;
+
+        logger.info("Create log ", JSON.stringify({
+            userId: userId,
+            app: app,
+            level: level,
+            message: message
+        }));
 
         // log
         logPersistent.log({

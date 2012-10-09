@@ -14,3 +14,11 @@ curl -X POST http://clog-beta.herokuapp.com/login -H "Content-Type: application/
 curl -X POST http://clog-beta.herokuapp.com/logout
 curl -X GET http://clog-beta.herokuapp.com/restricted -b cookies.txt
 curl -X POST http://clog-beta.herokuapp.com/api/log/admin/log -H "Content-Type: application/json" -d '{"level":"info", "message": "This is log message"}' -b cookies.txt
+
+----------------------------------------------------------------
+curl -X POST http://cloud-logging.rs.af.cm/api/auth -H "Content-Type: application/json" -d '{"email":"admin", "password": "admin123", "metadata": {"name": "admin"}}'
+curl -X POST http://cloud-logging.rs.af.cm/login -H "Content-Type: application/json" -d '{"email":"admin", "password": "admin123"}' -c cookies.txt
+curl -X POST http://cloud-logging.rs.af.cm/logout
+curl -X GET http://cloud-logging.rs.af.cm/restricted -b cookies.txt
+
+curl -X POST http://cloud-logging.rs.af.cm/api/log/admin/log -H "Content-Type: application/json" -d '{"level":"info", "message": "This is log message"}' -b cookies.txt

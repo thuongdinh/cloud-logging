@@ -8,9 +8,14 @@ var vows = require('vows'),
 fixturesHelper = new Fixtures('mongodb://root:123456@flame.mongohq.com:27089/log_test');
 fixturesHelper.clean('log');
 
+// config log
+var log4js = require('log4js'),
+    logger = log4js.getLogger();
+
 // make log persistent instance
 var logPersistent = new  LogPersistent({
-    dataURL: 'mongodb://root:123456@flame.mongohq.com:27089'
+    dataURL: 'mongodb://root:123456@flame.mongohq.com:27089',
+    logger: logger
 });
 
 // Helper methods

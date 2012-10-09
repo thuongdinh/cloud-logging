@@ -15,6 +15,7 @@ var SHA1_PRIVATE_KEY = '048abcf0-a865-11e1-afa6-0800200c9a66';
  */
 var Auth = exports.Auth = function (app) {
     this.app = app;
+    this.logger = app.logger;
     this.authInfo = app.authInfo;
 };
 
@@ -55,7 +56,11 @@ p.createUser = function (opt, callback) {
     var self = this,
         email = opt.email,
         password = opt.password,
-        metadata = opt.metadata || {};
+        metadata = opt.metadata || {},
+        whenWrongUserdata = function () {
+            self.logger.error("wrong user data " + JSON.stringify(opt));
+            callback(responseHelper.genErrorResp(ERROR.WRONG_USER_DATA));
+        };
 
     try {
         check(email).notEmpty() &&
@@ -77,8 +82,9 @@ p.createUser = function (opt, callback) {
                             metadata: metadata
                         }, {safe: true}, function (e, result) {
                             if (e) {
-                                callback(responseHelper.genErrorResp(ERROR.WRONG_USER_DATA));
+                                whenWrongUserdata();
                             } else {
+                                self.logger.info("Create user success " + JSON.stringify(opt) + ", with user Id " + result._id);
                                 callback(responseHelper.genSuccessResp({
                                     userId: result._id
                                 }));
@@ -90,7 +96,7 @@ p.createUser = function (opt, callback) {
         });
 
     } catch (e) {
-        callback(responseHelper.genErrorResp(ERROR.WRONG_USER_DATA));
+        whenWrongUserdata();
     }
 };
 
@@ -104,6 +110,8 @@ p.createUser = function (opt, callback) {
  */
 p.findUser = function (opt, callback) {
     var self = this;
+
+    self.logger.debug("Find user " + JSON.stringify(opt));
 
     this._connect(function (e, db) {
         db.collection(self.authInfo.userCollection, function (err, col) {
@@ -132,8 +140,15 @@ p.findUser = function (opt, callback) {
  */
 p.authenticate = function (opt, callback) {
     opt = opt || {};
-    var email = opt.email,
-        password = opt.password;
+    var self = this,
+        email = opt.email,
+        password = opt.password,
+        whenBadUserdata = function () {
+            self.logger.error("Bad credenticals " + JSON.stringify(opt));
+            callback(responseHelper.genErrorResp(ERROR.BAD_CREDENTICALS));
+        };
+
+    self.logger.debug("Start authenticate " + JSON.stringify(opt));
 
     try {
         check(email).notEmpty() &&
@@ -144,15 +159,16 @@ p.authenticate = function (opt, callback) {
             email: email
         }, function (resp) {
             if (resp.data.code === 0 && resp.data.publicKey === encrypt.hash(password, SHA1_PRIVATE_KEY)) {
+                self.logger.info("Authenticate success " + JSON.stringify(opt));
                 callback(responseHelper.genSuccessResp({
                     userId: resp.data.userId
                 }));
             } else {
-                callback(responseHelper.genErrorResp(ERROR.BAD_CREDENTICALS));
+                whenBadUserdata();
             }
         });
     } catch (e) {
-        callback(responseHelper.genErrorResp(ERROR.BAD_CREDENTICALS));
+        whenBadUserdata();
     }
 };
 
