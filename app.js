@@ -68,6 +68,8 @@ var generate_mongo_url = function(obj){
 }
 var mongourl = generate_mongo_url(mongo);
 
+logger.debug("Using mongoURL", mongourl);
+
 // Authentication service
 app.authInfo = {
     dataURL: mongourl,
