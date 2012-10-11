@@ -8,7 +8,7 @@ var LogRouter = function (app) {
 
     // config routers
     // Get api
-    app.get(LOG_ROUTER, function(req, res){
+    app.get(LOG_ROUTER, authSevice.restrict, function(req, res){
         var data = req.body,
             userId = req.params.userId,
             app = req.params.app,
@@ -32,7 +32,7 @@ var LogRouter = function (app) {
     });
 
     // Create api
-    app.post(LOG_ROUTER, authSevice.restrict, function(req, res){
+    app.post(LOG_ROUTER, function(req, res){
         var data = req.body,
             userId = req.params.userId,
             app = req.params.app,
